@@ -1,8 +1,18 @@
 # Basic SQL
 
 
--- 範例表格: us_housing_units
--- 欄位: year, month, month_name, south, west, midwest, northeast
+* 範例表格: us_housing_units
+
+|欄位|型態|
+|:---|:---|
+|year||
+|month||
+|month_name||
+|south||
+|west||
+|midwest||
+|northeast||
+
 
 ```SQL
 SELECT year,
@@ -221,8 +231,14 @@ WHERE year >= 2000
 * `NOT`: select rows that do not match a certain condiation
 
 
--- 範例表格: billboard_top_100_year_end
--- 欄位: year_rank, group, artist
+* 範例表格: billboard_top_100_year_end
+
+|欄位|型態|
+|:---|:---|
+|year_rank||
+|group||
+|artist||
+
 
 ```SQL
 SELECT *
@@ -577,8 +593,18 @@ ORDER BY year, year_rank
 * Aggregate functions are used to perform operations across entire columns
     * Aggregators only aggregate vertically
 
--- 範例表格: aapl_historical_stock_price
--- 欄位: year, month, date, open, high, low, close, volume 
+* 範例表格: aapl_historical_stock_price
+
+|欄位|型態|
+|:---|:---|
+|year||
+|month||
+|date||
+|open||
+|high||
+|low||
+|close||
+|volume||
 
 * Select all rows
     * `COUNT(1)` has the same effect as `COUNT(*)`
@@ -784,8 +810,18 @@ ORDER BY year, month
 * `CASE` must include the following components: `WHEN`, `THEN`, and `END`. `ELSE` is an optional component.
 
 
--- 範例表格: benn.college_football_players
--- 欄位: year, player_name, state, weight, height, position, school_name
+* 範例表格: benn.college_football_players
+
+|欄位|型態|
+|:---|:---|
+|year||
+|player_name||
+|state||
+|weight||
+|height||
+|position||
+|school_name||
+
 
 ```SQL
 SELECT player_name,
@@ -988,8 +1024,12 @@ FROM benn.college_football_players
 GROUP BY 1
 ```
 
--- 範例表格: aapl_historical_stock_price
--- 欄位: year, month
+* 範例表格: aapl_historical_stock_price
+
+|欄位|型態|
+|:---|:---|
+|year||
+|month||
 
 * Use `DISTINCT` for viewing unique values
 ```SQL
@@ -1044,10 +1084,24 @@ SELECT COUNT(DISTINCT year) AS years_count,
 FROM tutorial.aapl_historical_stock_price
 ```
 
--- 範例表格: benn.college_football_players
--- 欄位: weight, school_name, player_name, position, weight,
--- 範例表格: benn.college_football_teams
--- 欄位: conference, school_name, division
+* 範例表格: benn.college_football_players
+
+|欄位|型態|
+|:---|:---|
+|weight||
+|school_name||
+|player_name||
+|position||
+
+
+* 範例表格: benn.college_football_teams
+
+|欄位|型態|
+|:---|:---|
+|conference||
+|school_name||
+|division||
+
 
 ```SQL
 SELECT teams.conference AS conference,
@@ -1104,10 +1158,21 @@ WHERE  teams.division = 'FBS (Division I-A Teams)'
 * `FULL OUTER JOIN` 等於 `OUTER JOIN`
 
 
--- 範例表格: crunchbase_companies
--- 欄位: permalink, name, status,
--- 範例表格: crunchbase_acquisitions
--- 欄位: company_permalink, acquired_at,
+* 範例表格: crunchbase_companies
+
+|欄位|型態|
+|:---|:---|
+|permalink||
+|name||
+|status||
+
+* 範例表格: crunchbase_acquisitions
+
+|欄位|型態|
+|:---|:---|
+|company_permalink||
+|acquired_at||
+
 
 * 用 `JOIN`
 ```SQL
@@ -1497,8 +1562,14 @@ ORDER BY 5 DESC
 * Data munging or data wrangling is loosely the process of manually converting or mapping data from one raw form into another format that allows for more convenient consumption of the data with the help of semi-automated tools. In other words, data wrangling (or munging) is the process of programmatically transforming data into a format that makes it easier to work with.
 
 
--- 範例表格: sf_crime_incidents_2014_01
--- 欄位: location, lat, lon,
+* 範例表格: sf_crime_incidents_2014_01
+
+|欄位|型態|
+|:---|:---|
+|location||
+|lat||
+|lon||
+
 
 ```SQL
 SELECT *
