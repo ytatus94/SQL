@@ -83,7 +83,7 @@ WHERE month = 1
 The comparison operators can apply on non-numeric columns as well, they filter based on alphabetical order
 
 
-### Q: Return only the rows where the West Region produced more than 30,000 housing units. The units in this data table are already in thousands
+### Q: Return only the rows where the West Region produced more than 30,000 housing units. The units in this data table are already in thousands.
 ```SQL
 SELECT *
 FROM tutorial.us_housing_units
@@ -106,7 +106,7 @@ WHERE south <= 20
 
 ## Comparison operators on non-numerical data
 
-### Q: None of the January rows show up
+### Q: None of the January rows show up.
 ```SQL
 SELECT *
 FROM tutorial.us_housing_units
@@ -549,7 +549,7 @@ WHERE "group" ILIKE "%t-pain%"
 ORDER BY year_rank DESC
 ```
 
-### Q: Write a query that returns songs that ranked between 10 and 20 (inclusive) in 1993, 2003, or 2013. Order the results by year and rank, and leave a comment on each line of the WHERE clause to indicate what that line does
+### Q: Write a query that returns songs that ranked between 10 and 20 (inclusive) in 1993, 2003, or 2013. Order the results by year and rank, and leave a comment on each line of the WHERE clause to indicate what that line does.
 ```SQL
 SELECT *
 FROM tutorial.billboard_top_100_year_end
@@ -1311,7 +1311,7 @@ SELECT *
 FROM tutorial.crunchbase_investments_part2
 ```
 
-### Q: Write a query that appends the two `crunchbase_investments` datasets above (including duplicated values). Filter the first dataset to only companies with names that start with the letter "T", and filter the second to companies with names starting with "M" (both not case-sensitive). Only include the `company_permalink`, `company_name`, and `investor_name` columns
+### Q: Write a query that appends the two `crunchbase_investments` datasets above (including duplicated values). Filter the first dataset to only companies with names that start with the letter "T", and filter the second to companies with names starting with "M" (both not case-sensitive). Only include the `company_permalink`, `company_name`, and `investor_name` columns.
 ```SQL
 SELECT company_permalink,
        company_name,
@@ -1573,7 +1573,7 @@ SELECT incidnt_num,
 FROM tutorial.sf_crime_incidents_2014_01
 ```
 
-### Q: Write a query that separates the `location` field into separate fields for laitude and longitude. You can compare your results against the actual `lat` and `lon` fields in the table
+### Q: Write a query that separates the `location` field into separate fields for laitude and longitude. You can compare your results against the actual `lat` and `lon` fields in the table.
 ```SQL
 SELECT location,
        TRIM(leading '(' FROM LEFT(location, POSITION(',' IN location) - 1)) AS latitude,
@@ -1840,7 +1840,7 @@ ON incidents.date = sub.date
 ORDER BY sub.incidents DESC, time
 ```
 
-### Q: Write a query that displays all rows from the three categories with the fewest incidents reported
+### Q: Write a query that displays all rows from the three categories with the fewest incidents reported.
     1. subquery 先計算每個 category 發生的次數，然後依照發生次數升冪排序，只選出最低發生次數的前三個
     2. outer query 中把最低發生次數的前三個 category 的全部結果顯示出來
 ```SQL
@@ -1974,7 +1974,7 @@ GROUP BY 1
 ORDER BY 2 DESC
 ```
 
-### Q: Write a query that does the same thing as in the previous problem, except only for companies that are still operating. Hint: operating status is in `tutorial.crunchbase_companies`
+### Q: Write a query that does the same thing as in the previous problem, except only for companies that are still operating. Hint: operating status is in `tutorial.crunchbase_companies`.
 ```SQL
 SELECT investments.investor_name,
        COUNT(investments.*) AS investments
@@ -2033,7 +2033,7 @@ WHERE start_time < '2012-01-08'
 * 不能再同一個 query 中同時使用 window function 和 aggregation
 * 不能在 `GROUP BY` 子句中使用  window function
 
-### Q: Write a query modification of the above example query that shows the duration of each ride as a percentage of the total time accrued by riders from each start_terminal
+### Q: Write a query modification of the above example query that shows the duration of each ride as a percentage of the total time accrued by riders from each start_terminal.
 ```SQL
 SELECT start_terminal,
        duration_seconds,
