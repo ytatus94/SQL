@@ -413,3 +413,100 @@ DROP CONSTRAINT unique_constraint_name;
 ALTER TABLE users
 DROP CONSTRAINT uc_username;
 ```
+* `NOT NULL` constraint
+  * 和 `CHECK` constraint 等價 
+  * primary key 預設就是 `NOT NULL`
+```SQL
+CREATE TABLE table_name (
+    ...
+    column_name data_type NOT NULL,
+    ...
+);
+```
+```SQL
+CREATE TABLE table_name (
+    ...
+    column_name data_type,
+    ...
+    CHECK (column_name IS NOT NULL)
+);
+```
+```SQL
+CREATE TABLE training (
+    employee_id INT,
+    course_id INT,
+    taken_date DATE NOT NULL,
+    PRIMARY KEY (employee_id, course_id)
+);
+```
+```SQL
+INSERT INTO training(employee_id, course_id)
+VALUES (1, 1);
+```
+* 要把可以有 NULL 值的欄位變成 `NOT NULL`
+```SQL
+UPDATE table_name
+SET column_name = 0
+WHERE column_name IS NULL
+
+ALERT TABLE table_name
+MODIFY column_name data_type NOT NULL;
+```
+```SQL
+UPDATE training
+SET taken_date = CURRENT_DATE ()
+WHERE taken_date IS NULL;
+
+ALTER TABLE training
+MODIFY taken_date date NOT NULL;
+```
+* `CHECK` constraint
+  * 檢查一個欄位或是整個表格是否滿足某布林運算
+  * 當布林運算結果是 true 或是 `NULL` 時都是成立
+    * 只要有一個操作是 `NULL` 結果就會是 `NULL`
+    * 所以要加上 `NOT NULL` constraint 預防這種情形
+```SQL
+CHECK(Boolean_expression)
+```
+* 把 `CHECK` constraint 命名
+```SQL
+CONSTRAINT constraint_name CHECK(Boolean_expression)
+```
+```SQL
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    selling_price NUMERIC(10, 2) CHECK (Sselling_price > 0)
+);
+```
+```SQL
+CREATE TABLE (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    selling_price NUMERIC(10, 2) CONSTRAIN positive_selling_price CHECK (selling_price > 0)
+);
+```
+```SQL
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    selling_price NUMERIC(10, 2) CHECK (selling_price > 0),
+    cost NUMERIC(10, 2) CHECK (cost > 0),
+    CHECK (selling_price > cost)
+);
+```
+```SQL
+CREATE TABLE table_name (
+   ...
+   CONSTRAINT check_constraint_name CHECK (Boolean_expression)
+);
+```
+```SQL
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    selling_price NUMERIC(10, 2) CHECK (selling_price > 0),
+    cost NUMERIC(10, 2) CHECK (cost > 0),
+    CONSTRAINT valid_selling_price CHECK (selling_price > cost)
+);
+```
