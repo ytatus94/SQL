@@ -243,6 +243,7 @@ TRUNCATE TABLE table_name1, table_name2, ...;
 ```
 * Examples:
 ```SQL
+-- 建立表格，插入資料，然後刪除表格
 CREATE TABLE big_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     val INT
@@ -253,7 +254,7 @@ VALUES (RAND(100000));
 
 TRUNCATE TABLE big_table;
 
--- 寫程式產生大表格，然後刪除它
+-- 寫程式產生大表格，然後刪除表格
 DELIMITER $$
 CREATE PROCEDURE load_big_table_data(IN num int)
 BEGIN
@@ -288,6 +289,7 @@ DROP CONSTRAINT primary_key_constraint;
 ```
 * Examples:
 ```SQL
+-- 宣告 project_id 是 primary key
 CREATE TABLE projects (
     project_id INT PRIMARY KEY,
     project_name VARCHAR(255),
@@ -331,9 +333,21 @@ ALTER TABLE project_milestones
 DROP CONSTRAINT pk_milestone_id
 ```
 
-* `FOREIGN KEY`
-  * 一個表格的 primary key 在另一個表格中就變成了 foreign key
+### `FOREIGN KEY`
+* 一個表格的 primary key 在另一個表格中就變成了 foreign key
+* Syntax:
 ```SQL
+-- 用 `ALTER TABLE` 對已經存在的表格加入 `FOREIGN KEY` constraint
+ALTER TABLE table_1
+ADD CONSTRAINT fk_name FOREIGN KEY (fk_key_column) REFERENCES table_2 (pk_key_column)
+
+-- 用 `ALTER TABLE` 刪除 `FOREIGN KEY` constraint
+ALTER TABLE table_name
+DROP CONSTRAIN fk_name;
+```
+* Examples:
+```SQL
+-- project_id 是 project_milestones 表格的 `FOREIGN KEY`
 CREATE TABLE projects (
     project_id INT AUTO_INCREMENT PRIMARY KEY,
     project_name VARCHAR(255),
@@ -346,98 +360,86 @@ CREATE TABLE project_milestones (
     project_id INT,
     milestone_name VARCHAR(100)
 );
-```
-* 也可以在建立表格時加上 `FOREIGN KEY` table constraint
-```SQL
+
+-- 也可以在建立表格時加上 `FOREIGN KEY` table constraint
 CREATE TABLE project_milestones (
     milestond_id INT AUTO_INCREMENT PRIMARY KEY,
     project_id INT,
     milestone_name VARCHAR(100),
     FOREIGN KEY (project_id) REFERENCES projects (project_id)
 );
-```
-* 幫 `FOREIGN KEY` constraint 加上名字
-```SQL
+
+-- 幫 `FOREIGN KEY` constraint 加上名字
 CREATE TABLE project_milestones (
     milestond_id INT AUTO_INCREMENT PRIMARY KEY,
     project_id INT,
     milestone_name VARCHAR(100),
     CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects (project_id)
 );
-```
-* 用 `ALTER TABLE` 對已經存在的表格加入 `FOREIGN KEY` constraint
-```SQL
-ALTER TABLE table_1
-ADD CONSTRAINT fk_name FOREIGN KEY (fk_key_column) REFERENCES table_2 (pk_key_column)
-```
-```SQL
+
+-- 用 `ALTER TABLE` 對已經存在的表格加入 `FOREIGN KEY` constraint
 ALTER TABLE project_milestones
 ADD CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects (project_id)
-```
-* 用 `ALTER TABLE` 刪除 `FOREIGN KEY` constraint
-```SQL
-ALTER TABLE table_name
-DROP CONSTRAIN fk_name;
-```
-```SQL
-ALTER TABLE table_name
-DROP FOREIGN KEY fk_name;
-```
-```SQL
+
+-- 用 `ALTER TABLE` 刪除 `FOREIGN KEY` constraint
 ALTER TABLE project_milestones
 DROP CONSTRAIN fk_project;
 ```
-* `UNIQUE` constraint 可以防止重複
-  * 一個表格中可以有很多 `UNIQUE`
-  * 允許 `NULL`
+
+### `UNIQUE` constraint 可以防止重複
+* 一個表格中可以有很多欄位是 `UNIQUE`
+* 允許 `NULL`
+* Syntax:
 ```SQL
+-- 加入一個新的欄位，並且有 `UNIQUE` constraint
+ALTER TABLE users
+ADD new_column data_type UNIQUE;
+```
+* Examples:
+```SQL
+-- username 是 `UNIQUE`
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
 );
-```
-```SQL
+
+-- 用 `CONSTRAINT` 幫 `UNIQUE` 欄位命名
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     CONSTRAINT uc_username UNIQUE (username)
 );
-```
-```SQL
+
+-- 用 `ALTER TABLE` 把欄位變成 `UNIQUE`
 ALTER TABLE users
 ADD CONSTRAINT uc_username UNIQUE (username);
-```
-＊ 加入一個新的欄位，並且有 `UNIQUE` constraint
-```SQL
-ALTER TABLE users
-ADD new_column data_type UNIQUE;
-```
-```SQL
+
+-- 加入一個 UNIQUE 的新欄位
 ALTER TABLE users
 ADD email VARCHAR(255) UNIQUE;
-```
-* 刪除 `UNIQUE` constraint
-```SQL
+
+-- 刪除 `UNIQUE` constraint
 ALTER TABLE users
 DROP CONSTRAINT unique_constraint_name;
-```
-```SQL
+
 ALTER TABLE users
 DROP CONSTRAINT uc_username;
 ```
-* `NOT NULL` constraint
-  * 和 `CHECK` constraint 等價 
-  * primary key 預設就是 `NOT NULL`
+
+### `NOT NULL` constraint
+* 和 `CHECK` constraint 等價 
+* primary key 預設就是 `NOT NULL`
+* Syntax:
 ```SQL
 CREATE TABLE table_name (
     ...
     column_name data_type NOT NULL,
     ...
 );
-```
-```SQL
+
+-- 也可以用 CHECK 檢查 `NOT NULL`
 CREATE TABLE table_name (
     ...
     column_name data_type,
@@ -445,6 +447,7 @@ CREATE TABLE table_name (
     CHECK (column_name IS NOT NULL)
 );
 ```
+* Examples:
 ```SQL
 CREATE TABLE training (
     employee_id INT,
@@ -452,21 +455,19 @@ CREATE TABLE training (
     taken_date DATE NOT NULL,
     PRIMARY KEY (employee_id, course_id)
 );
-```
-```SQL
+
 INSERT INTO training(employee_id, course_id)
 VALUES (1, 1);
-```
-* 要把可以有 NULL 值的欄位變成 `NOT NULL`
-```SQL
+
+-- 要把可以有 NULL 值的欄位變成 `NOT NULL`
 UPDATE table_name
 SET column_name = 0
 WHERE column_name IS NULL
 
 ALERT TABLE table_name
 MODIFY column_name data_type NOT NULL;
-```
-```SQL
+
+--
 UPDATE training
 SET taken_date = CURRENT_DATE ()
 WHERE taken_date IS NULL;
@@ -474,33 +475,42 @@ WHERE taken_date IS NULL;
 ALTER TABLE training
 MODIFY taken_date date NOT NULL;
 ```
-* `CHECK` constraint
-  * 檢查一個欄位或是整個表格是否滿足某布林運算
-  * 當布林運算結果是 true 或是 `NULL` 時都是成立
-    * 只要有一個操作是 `NULL` 結果就會是 `NULL`
-    * 所以要加上 `NOT NULL` constraint 預防這種情形
+
+## `CHECK` constraint
+* 檢查一個欄位或是整個表格是否滿足某布林運算
+* 當布林運算結果是 true 或是 `NULL` 時都是成立
+  * 只要有一個操作是 `NULL` 結果就會是 `NULL`
+  * 所以要加上 `NOT NULL` constraint 預防這種情形
+* Syntax:
 ```SQL
 CHECK(Boolean_expression)
-```
-* 把 `CHECK` constraint 命名
-```SQL
+
+-- 把 `CHECK` constraint 命名
 CONSTRAINT constraint_name CHECK(Boolean_expression)
+
+--
+CREATE TABLE table_name (
+   ...
+   CONSTRAINT check_constraint_name CHECK (Boolean_expression)
+);
 ```
+* Examples:
 ```SQL
+--
 CREATE TABLE products (
     product_id INT PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
     selling_price NUMERIC(10, 2) CHECK (Sselling_price > 0)
 );
-```
-```SQL
+
+--
 CREATE TABLE (
     product_id INT PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
     selling_price NUMERIC(10, 2) CONSTRAIN positive_selling_price CHECK (selling_price > 0)
 );
-```
-```SQL
+
+-- `CHECK` 是 table constraint 時
 CREATE TABLE products (
     product_id INT PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
@@ -508,14 +518,8 @@ CREATE TABLE products (
     cost NUMERIC(10, 2) CHECK (cost > 0),
     CHECK (selling_price > cost)
 );
-```
-```SQL
-CREATE TABLE table_name (
-   ...
-   CONSTRAINT check_constraint_name CHECK (Boolean_expression)
-);
-```
-```SQL
+
+-- 
 CREATE TABLE products (
     product_id INT PRIMARY KEY,
     product_name VARCHAR(255) NOT NULL,
