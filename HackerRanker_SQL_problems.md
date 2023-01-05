@@ -1,71 +1,187 @@
 # HackerRanker SQL problems
 
-### 01.
+### 01. Revising the Select Query I
 ```SQL
+SELECT *
+FROM CITY
+WHERE POPULATION > 100000
+AND COUNTRYCODE = 'USA'
 ```
 
-### 02.
+### 02. Revising the Select Query II
 ```SQL
+SELECT NAME
+FROM CITY
+WHERE POPULATION > 120000
+AND COUNTRYCODE = 'USA'
 ```
 
-### 03.
+### 03. Select All
 ```SQL
+SELECT *
+FROM CITY
 ```
 
-### 04.
+### 04. Select By ID
 ```SQL
+SELECT *
+FROM CITY
+WHERE ID = 1661
 ```
 
-### 05.
+### 05. Japanese Cities' Attributes
 ```SQL
+SELECT *
+FROM CITY
+WHERE COUNTRYCODE = 'JPN'
 ```
 
-### 06.
+### 06. Japanese Cities' Names
 ```SQL
+SELECT NAME
+FROM CITY
+WHERE COUNTRYCODE = 'JPN'
 ```
 
-### 07.
+### 07. Weather Observation Station 1
 ```SQL
+SELECT
+    CITY,
+    STATE
+FROM STATION
 ```
 
-### 08.
+### 08. Weather Observation Station 3
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE ID % 2 = 0
 ```
 
-### 09.
+### 09. Weather Observation Station 4
 ```SQL
+SELECT
+    COUNT(CITY) - COUNT(DISTINCT CITY)
+FROM STATION
 ```
 
-### 10.
+### 10. Weather Observation Station 5
+方法 1.
 ```SQL
+(
+    SELECT
+        CITY,
+        LENGTH(CITY)
+    FROM STATION
+    WHERE LENGTH(CITY) = (
+        SELECT
+            MIN(LENGTH(CITY))
+        FROM STATION
+    )
+    ORDER BY 1
+    LIMIT 1
+)
+UNION
+(
+    SELECT
+        CITY,
+        LENGTH(CITY)
+    FROM STATION
+    WHERE LENGTH(CITY) = (
+        SELECT
+            MAX(LENGTH(CITY))
+        FROM STATION
+    )
+    ORDER BY 1
+    LIMIT 1
+)
+```
+方法 2.
+```SQL
+SELECT
+    CITY,
+    MIN(LENGTH(CITY))
+FROM STATION
+GROUP BY 1
+HAVING LENGTH(CITY) = (
+    SELECT
+        MIN(LENGTH(CITY))
+    FROM STATION
+)
+ORDER BY 1
+LIMIT 1;
+SELECT
+    CITY,
+    MAX(LENGTH(CITY))
+FROM STATION
+GROUP BY 1
+HAVING LENGTH(CITY) = (
+    SELECT
+        MAX(LENGTH(CITY))
+    FROM STATION
+)
+ORDER BY 1
+LIMIT 1;
 ```
 
-### 11.
+### 11. Weather Observation Station 6
 ```SQL
+SELECT
+    CITY
+FROM STATION
+WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 12.
+### 12. Weather Observation Station 7
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 13.
+### 13. Weather Observation Station 8
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
+AND RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 14.
+### 14. Weather Observation Station 9
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 15.
+### 15. Weather Observation Station 10
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 16.
+### 16. Weather Observation Station 11
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
+OR RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 17.
+### 17. Weather Observation Station 12
 ```SQL
+SELECT
+    DISTINCT CITY
+FROM STATION
+WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
+AND RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
 ### 18.
