@@ -184,16 +184,31 @@ WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 AND RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
-### 18.
+### 18. Higher Than 75 Marks
 ```SQL
+SELECT
+    NAME
+FROM STUDENTS S
+WHERE MARKS > 75
+ORDER BY RIGHT(NAME, 3), ID
 ```
 
-### 19.
+### 19. Employee Names
 ```SQL
+SELECT
+    NAME
+FROM EMPLOYEE
+ORDER BY 1
 ```
 
-### 20.
+### 20. Employee Salaries
 ```SQL
+SELECT
+    NAME
+FROM EMPLOYEE
+WHERE SALARY > 2000
+AND MONTHS < 10
+ORDER BY EMPLOYEE_ID
 ```
 
 ### 21.
