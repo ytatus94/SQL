@@ -364,31 +364,53 @@ ON C.COMPANY_CODE = E.COMPANY_CODE
 ORDER BY C.COMPANY_CODE
 ```
 
-### 26.
+### 26. Revising Aggregations - The Count Function
 ```SQL
+SELECT
+    COUNT(NAME)
+FROM CITY
+WHERE POPULATION > 100000
 ```
 
-### 27.
+### 27. Revising Aggregations - The Sum Function
 ```SQL
+SELECT
+    SUM(POPULATION)
+FROM CITY
+WHERE DISTRICT = 'California'
 ```
 
-### 28.
+### 28. Revising Aggregations - Averages
 ```SQL
+SELECT
+    AVG(POPULATION)
+FROM CITY
+WHERE DISTRICT='California'
 ```
 
-### 29.
+### 29. Average Population
 ```SQL
+SELECT
+    FLOOR(AVG(POPULATION))
+FROM CITY
 ```
 
-### 30.
+### 30. Japan Population
 ```SQL
+SELECT
+    SUM(POPULATION)
+FROM CITY
+WHERE COUNTRYCODE = 'JPN'
 ```
 
-### 31.
+### 31. Population Density Difference
 ```SQL
+SELECT
+    MAX(POPULATION) - MIN(POPULATION)
+FROM CITY
 ```
 
-### 32.
+### 32. The Blunder
 ```SQL
 ```
 
