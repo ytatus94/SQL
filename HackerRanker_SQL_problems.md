@@ -67,7 +67,7 @@ FROM STATION
 ```
 
 ### 10. Weather Observation Station 5
-方法 1.
+* 方法 1. 用 union 時，如果 query 中有 `order by`, `limit` 等關鍵字，就要先用括號把 query 刮起來
 ```SQL
 (
     SELECT
@@ -97,7 +97,7 @@ UNION
     LIMIT 1
 )
 ```
-方法 2.
+* 方法 2. 分別寫兩個 query 用分號區隔開來
 ```SQL
 SELECT
     CITY,
@@ -212,6 +212,7 @@ ORDER BY EMPLOYEE_ID
 ```
 
 ### 21. Type of Triangle
+* 注意用"兩邊之和大於第三邊"先判斷是不是三角形
 ```SQL
 SELECT
     CASE
@@ -224,6 +225,7 @@ FROM TRIANGLES
 ```
 
 ### 22. The PADS
+* `CONCAT()` 不會產生空白，需要空白要自己加入
 ```SQL
 SELECT
     CONCAT(NAME, '(', LEFT(OCCUPATION, 1), ')')
@@ -275,6 +277,7 @@ GROUP BY SUB.ROW_NUMBER
 ```
 
 ### 24. Binary Tree Nodes
+* 如果一個節點是別人的父節點，那就會屬於 inner
 ```SQL
 SELECT
     N,
