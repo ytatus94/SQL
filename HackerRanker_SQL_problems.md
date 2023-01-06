@@ -68,6 +68,7 @@ FROM STATION
 
 ### 10. Weather Observation Station 5
 * 方法 1. 用 union 時，如果 query 中有 `order by`, `limit` 等關鍵字，就要先用括號把 query 刮起來
+* `Union` 結合的兩個 query 要有相同的欄位
 ```SQL
 (
     SELECT
@@ -277,7 +278,9 @@ GROUP BY SUB.ROW_NUMBER
 ```
 
 ### 24. Binary Tree Nodes
+* 如果沒有父節點，那就是 root
 * 如果一個節點是別人的父節點，那就會屬於 inner
+* 如果不是別的節點的父節點，那就是 leaf
 ```SQL
 SELECT
     N,
@@ -336,7 +339,7 @@ ON C.COMPANY_CODE = E.COMPANY_CODE
 ORDER BY C.COMPANY_CODE;
 ```
 * 方法 2. employee 表格中已經有 lead_manager, senior_manager, 和 manager 的資訊了，所以只用 employee 表格就好
-* 要記得取 distinct
+* 因為各階層的主管底下會有不同員工，所以主管會重複很多次，要記得取 distinct
 ```SQL
 SELECT
     C.COMPANY_CODE,
