@@ -412,57 +412,122 @@ FROM CITY
 
 ### 32. The Blunder
 ```SQL
+SELECT
+    CEIL(AVG(Salary) - AVG(REPLACE(Salary, '0', '')))
+FROM EMPLOYEES
 ```
 
-### 33.
+### 33. Top Earners
+```SQL
+SELECT
+    MONTHS * SALARY, COUNT(*)
+FROM EMPLOYEE
+    WHERE MONTHS * SALARY = (
+    SELECT
+        MAX(MONTHS * SALARY)
+    FROM EMPLOYEE
+)
+GROUP BY MONTHS * SALARY
+```
+
+### 34. Weather Observation Station 2
+```SQL
+SELECT
+    ROUND(SUM(LAT_N), 2),
+    ROUND(SUM(LONG_W), 2)
+FROM STATION
+```
+
+### 35. Weather Observation Station 13
+```SQL
+SELECT ROUND(SUM(LAT_N), 4)
+FROM STATION
+WHERE LAT_N > 38.7880 AND LAT_N < 137.2345
+```
+```SQL
+SELECT
+    ROUND(SUM(SUB.LAT_N), 4)
+FROM (
+    SELECT
+        ID,
+        LAT_N
+    FROM STATION
+    WHERE LAT_N BETWEEN 38.7880 AND 137.2345
+) SUB
+
+```
+
+### 36. Weather Observation Station 14
+```SQL
+SELECT
+    ROUND(MAX(LAT_N), 4)
+FROM STATION
+WHERE LAT_N < 137.2345
+```
+
+### 37. Weather Observation Station 15
+```SQL
+SELECT
+    ROUND(LONG_W, 4)
+FROM STATION
+WHERE LAT_N = (
+    SELECT
+        MAX(LAT_N)
+    FROM STATION
+    WHERE LAT_N < 137.2345
+) 
+```
+
+### 38. Weather Observation Station 16
+```SQL
+SELECT
+    ROUND(MIN(LAT_N), 4)
+FROM STATION
+WHERE LAT_N > 38.7780
+```
+
+### 39. Weather Observation Station 17
+```SQL
+SELECT
+    ROUND(LONG_W, 4)
+FROM STATION
+WHERE LAT_N = (
+    SELECT
+        MIN(LAT_N)
+    FROM STATION
+    WHERE LAT_N > 38.7780
+)
+```
+
+### 40. Weather Observation Station 18
+```SQL
+-- Manhattan distance = |x1 - x2| + |y1 - y2|
+SELECT
+    ROUND(ABS(MIN(LAT_N) - MAX(LAT_N)) + ABS(MIN(LONG_W) - MAX(LONG_W)), 4)
+FROM STATION
+```
+
+### 41. Weather Observation Station 19
+```SQL
+-- Euclidean distance = sqrt( (x1 - x2)^2 + (y1 - y2)^2 )
+SELECT
+    ROUND(SQRT(POWER(MIN(LAT_N) - MAX(LAT_N), 2) + POWER(MIN(LONG_W) - MAX(LONG_W), 2)), 4)
+FROM STATION
+```
+
+### 42. Weather Observation Station 20
 ```SQL
 ```
 
-### 34.
+### 43. Population Census 
 ```SQL
 ```
 
-### 35.
+### 44. African Cities
 ```SQL
 ```
 
-### 36.
-```SQL
-```
-
-### 37.
-```SQL
-```
-
-### 38.
-```SQL
-```
-
-### 39.
-```SQL
-```
-
-### 40.
-```SQL
-```
-
-### 41.
-```SQL
-```
-
-### 42.
-```SQL
-```
-
-### 43.
-```SQL
-```
-
-### 44.
-```SQL
-```
-
-### 45.
+### 45. Average Population of Each Continent
 ```SQL
 ```
 
