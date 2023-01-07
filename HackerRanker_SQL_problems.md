@@ -516,38 +516,94 @@ FROM STATION
 ```
 
 ### 42. Weather Observation Station 20
+* 方法 1. 只要知道 `PERCENT_RANK()` 那這題就能解
 ```SQL
+SELECT ROUND(SUB.LAT_N, 4)
+FROM (
+    SELECT
+        PERCENT_RANK() OVER (ORDER BY LAT_N) AS PCT,
+        LAT_N
+    FROM STATION
+) SUB
+WHERE PCT = 0.5
+```
+* 方法 2. 奇數 row: median = 正中間那個，偶數 row: median = 正中間兩個相加除以二
+* 這一題一定是奇數 row，如果是偶數會選出兩個 row 就無法指定哪個是 median
+```SQL
+SELECT
+    ROUND(SUB.LAT_N, 4)
+FROM (
+    SELECT
+        LAT_N,
+        ROW_NUMBER() OVER (ORDER BY LAT_N) AS 'ROW_NUMBER'
+    FROM STATION
+) SUB
+WHERE SUB.ROW_NUMBER = (
+    SELECT
+        CEIL(COUNT(LAT_N) / 2)
+    FROM STATION
+)
 ```
 
 ### 43. Population Census 
 ```SQL
+SELECT
+    SUM(CITY.POPULATION)
+FROM CITY
+JOIN COUNTRY
+ON CITY.COUNTRYCODE = COUNTRY.CODE
+WHERE COUNTRY.CONTINENT = 'Asia'
 ```
 
 ### 44. African Cities
 ```SQL
+SELECT
+    CITY.NAME
+FROM CITY
+JOIN COUNTRY
+ON CITY.COUNTRYCODE = COUNTRY.CODE
+WHERE COUNTRY.CONTINENT = 'Africa'
 ```
 
 ### 45. Average Population of Each Continent
 ```SQL
+SELECT
+    COUNTRY.CONTINENT,
+    FLOOR(AVG(CITY.POPULATION))
+FROM CITY
+JOIN COUNTRY
+ON CITY.COUNTRYCODE = COUNTRY.CODE
+GROUP BY 1
 ```
 
-### 46.
+### 46. The Report
+```SQL
+SELECT
+    CASE
+        WHEN GRADES.GRADE < 8 THEN NULL
+        ELSE STUDENTS.NAME
+    END,
+    GRADES.GRADE,
+    STUDENTS.MARKS
+FROM STUDENTS
+JOIN GRADES
+ON STUDENTS.MARKS BETWEEN GRADES.MIN_MARK AND GRADES.MAX_MARK
+ORDER BY GRADES.GRADE DESC, NAME, MARKS
+```
+
+### 47. Top Competitors
 ```SQL
 ```
 
-### 47.
+### 48. Ollivander's Inventory
 ```SQL
 ```
 
-### 48.
+### 49. Challenges
 ```SQL
 ```
 
-### 49.
-```SQL
-```
-
-### 50.
+### 50. Contest Leaderboard
 ```SQL
 ```
 
