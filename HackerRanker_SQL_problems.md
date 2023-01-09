@@ -640,6 +640,26 @@ ORDER BY SUB2.CNT DESC, H.HACKER_ID
 ### 48. Ollivander's Inventory (難)
 * 要注意，相同 (power, age) 時要選擇最小的價格的魔杖
 ```SQL
+SELECT
+    W.ID,
+    WP.AGE,
+    W.COINS_NEEDED,
+    W.POWER
+FROM WANDS AS W
+JOIN WANDS_PROPERTY AS WP
+ON W.CODE = WP.CODE
+WHERE WP.IS_EVIL = 0
+AND (W.POWER, WP.AGE, W.COINS_NEEDED) IN (
+    SELECT
+        W.POWER,
+        WP.AGE,
+        MIN(W.COINS_NEEDED)
+    FROM WANDS AS W
+    JOIN WANDS_PROPERTY AS WP
+    ON W.CODE = WP.CODE
+    GROUP BY W.POWER, WP.AGE
+)
+ORDER BY W.POWER DESC, WP.AGE DESC
 ```
 
 ### 49. Challenges
