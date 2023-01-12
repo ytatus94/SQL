@@ -722,25 +722,165 @@ ORDER BY 3 DESC, 1
 
 ### 50. Contest Leaderboard
 ```SQL
+SELECT
+    H.HACKER_ID,
+    H.NAME,
+    S.TOTAL_SCORE
+FROM HACKERS AS H
+JOIN (
+    SELECT
+        SUB.HACKER_ID,
+        SUM(SUB.SCORE) AS TOTAL_SCORE
+    FROM (
+        SELECT
+            HACKER_ID,
+            CHALLENGE_ID,
+            MAX(SCORE) AS SCORE
+        FROM SUBMISSIONS
+        GROUP BY 1, 2
+    ) SUB
+    GROUP BY 1
+) AS S
+ON H.HACKER_ID = S.HACKER_ID
+WHERE S.TOTAL_SCORE <> 0
+ORDER BY 3 DESC, 1
 ```
 
-### 51.
+### 51. SQL Project Planning
+* 方法 1
+```SQL
+SELECT
+    MIN(START_DATE),
+    MAX(END_DATE)
+FROM(
+    SELECT
+        START_DATE,
+        END_DATE,
+        ROW_NUMBER() OVER (ORDER BY END_DATE) AS NUM
+    FROM PROJECTS
+) SUB
+GROUP BY DATE_SUB(END_DATE, INTERVAL NUM DAY)
+ORDER BY DATEDIFF(MAX(END_DATE), MIN(START_DATE)) ASC, MIN(START_DATE) ASC
+```
+* 方法 2
+```SQL
+SELECT
+    START_DATE,
+    END_DATE
+FROM (
+    SELECT
+        MIN(START_DATE) AS START_DATE,
+        MAX(END_DATE) AS END_DATE,
+        MAX(END_DATE) - MIN(START_DATE) + 1 AS TOTAL_DAYS
+    FROM (
+        SELECT
+            START_DATE,
+            END_DATE,
+            DATE_SUB(END_DATE, INTERVAL ROW_NUM DAY) AS BEGIN_DATE
+        FROM (
+                SELECT
+                ROW_NUMBER() OVER (ORDER BY START_DATE) AS ROW_NUM,
+                START_DATE,
+                END_DATE
+            FROM PROJECTS
+        ) SUB
+
+    ) SUB2
+    GROUP BY BEGIN_DATE
+) SUB3
+ORDER BY TOTAL_DAYS, START_DATE
+```
+
+### 52. Placements
+* 方法 1
+```SQL
+SELECT
+    SUB1.NAME
+FROM (
+    SELECT
+        S.ID,
+        S.NAME,
+        P.SALARY
+    FROM STUDENTS AS S
+    JOIN PACKAGES AS P
+    ON S.ID = P.ID
+) SUB1
+JOIN FRIENDS AS SUB2
+ON SUB2.ID = SUB1.ID
+JOIN (
+    SELECT
+        F.FRIEND_ID,
+        P2.SALARY
+    FROM FRIENDS AS F
+    JOIN PACKAGES AS P2
+    ON F.FRIEND_ID = P2.ID
+) SUB3
+ON SUB3.FRIEND_ID = SUB2.FRIEND_ID
+WHERE SUB3.SALARY > SUB1.SALARY
+ORDER BY SUB3.SALARY
+```
+* 方法 2
+```SQL
+SELECT
+    S.NAME
+FROM STUDENTS S
+JOIN PACKAGES P1
+ON S.ID = P1.ID
+JOIN FRIENDS F
+ON S.ID = F.ID
+JOIN PACKAGES P2
+ON F.FRIEND_ID = P2.ID
+WHERE P2.SALARY > P1.SALARY
+ORDER BY P2.SALARY
+```
+
+### 53. Symmetric Pairs
+* 方法 1.
+```SQL
+SELECT
+    DISTINCT T1.X, T1.Y
+FROM (
+    SELECT
+        X,
+        Y,
+        ROW_NUMBER() OVER (ORDER BY X) AS NUM
+    FROM FUNCTIONS
+) AS T1
+JOIN (
+    SELECT
+        X,
+        Y,
+        ROW_NUMBER() OVER (ORDER BY X) AS NUM
+    FROM FUNCTIONS
+) AS T2
+ON T1.X = T2.Y AND T1.Y = T2.X AND T1.NUM <> T2.NUM
+WHERE T1.X <= T1.Y
+ORDER BY T1.X
+```
+* 方法 2.
+```SQL
+WITH T AS (
+    SELECT
+        DISTINCT X, Y,
+        ROW_NUMBER() OVER (ORDER BY X) AS 'ROW_NUM'
+    FROM FUNCTIONS
+)
+SELECT
+    DISTINCT F1.X, F1.Y
+FROM T F1
+JOIN T F2
+WHERE F1.X = F2.Y
+AND F1.Y = F2.X
+AND F1.ROW_NUM <> F2.ROW_NUM
+AND F1.X <= F1.Y
+ORDER BY F1.X
+```
+
+### 54. Interviews
 ```SQL
 ```
 
-### 52.
-```SQL
-```
-
-### 53.
-```SQL
-```
-
-### 54.
-```SQL
-```
-
-### 55.
+### 55. 15 Days of Learning SQL
 ```SQL
 ```
 
