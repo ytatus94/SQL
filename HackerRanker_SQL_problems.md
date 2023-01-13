@@ -45,24 +45,20 @@ WHERE COUNTRYCODE = 'JPN'
 
 ### 07. Weather Observation Station 1
 ```SQL
-SELECT
-    CITY,
-    STATE
+SELECT CITY, STATE
 FROM STATION
 ```
 
 ### 08. Weather Observation Station 3
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE ID % 2 = 0
 ```
 
 ### 09. Weather Observation Station 4
 ```SQL
-SELECT
-    COUNT(CITY) - COUNT(DISTINCT CITY)
+SELECT COUNT(CITY) - COUNT(DISTINCT CITY)
 FROM STATION
 ```
 
@@ -71,23 +67,23 @@ FROM STATION
 * `Union` 結合的兩個 query 要有相同的欄位
 ```SQL
 (
-SELECT
-    MIN(CITY) AS CITY,
-    LENGTH(CITY) AS LEN
-FROM STATION
-GROUP BY LENGTH(CITY)
-ORDER BY 2, 1
-LIMIT 1
+    SELECT
+        MIN(CITY) AS CITY,
+        LENGTH(CITY) AS LEN
+    FROM STATION
+    GROUP BY LENGTH(CITY)
+    ORDER BY 2, 1
+    LIMIT 1
 )
 UNION
 (
-SELECT
-    MAX(CITY) AS CITY,
-    LENGTH(CITY) AS LEN
-FROM STATION
-GROUP BY LENGTH(CITY)
-ORDER BY 2 DESC, 1
-LIMIT 1
+    SELECT
+        MAX(CITY) AS CITY,
+        LENGTH(CITY) AS LEN
+    FROM STATION
+    GROUP BY LENGTH(CITY)
+    ORDER BY 2 DESC, 1
+    LIMIT 1
 )
 ```
 ```SQL
@@ -160,8 +156,7 @@ OR CITY LIKE 'U%'
 ```
 * 方法 2.
 ```SQL
-SELECT
-    CITY
+SELECT CITY
 FROM STATION
 WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 ```
@@ -179,16 +174,14 @@ OR CITY LIKE '%U'
 ```
 * 方法 2.
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 ```
 
 ### 13. Weather Observation Station 8
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE LEFT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 AND RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
@@ -196,24 +189,21 @@ AND RIGHT(CITY, 1) IN ('A', 'E', 'I', 'O', 'U')
 
 ### 14. Weather Observation Station 9
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
 ### 15. Weather Observation Station 10
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 ```
 
 ### 16. Weather Observation Station 11
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 OR RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
@@ -221,8 +211,7 @@ OR RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 
 ### 17. Weather Observation Station 12
 ```SQL
-SELECT
-    DISTINCT CITY
+SELECT DISTINCT CITY
 FROM STATION
 WHERE LEFT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 AND RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
@@ -230,8 +219,7 @@ AND RIGHT(CITY, 1) NOT IN ('A', 'E', 'I', 'O', 'U')
 
 ### 18. Higher Than 75 Marks
 ```SQL
-SELECT
-    NAME
+SELECT NAME
 FROM STUDENTS S
 WHERE MARKS > 75
 ORDER BY RIGHT(NAME, 3), ID
@@ -239,16 +227,14 @@ ORDER BY RIGHT(NAME, 3), ID
 
 ### 19. Employee Names
 ```SQL
-SELECT
-    NAME
+SELECT NAME
 FROM EMPLOYEE
 ORDER BY 1
 ```
 
 ### 20. Employee Salaries
 ```SQL
-SELECT
-    NAME
+SELECT NAME
 FROM EMPLOYEE
 WHERE SALARY > 2000
 AND MONTHS < 10
