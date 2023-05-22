@@ -65,6 +65,7 @@ FROM STATION
 ### 10. Weather Observation Station 5
 * 方法 1. 用 union 時，如果 query 中有 `order by`, `limit` 等關鍵字，就要先用括號把 query 刮起來
 * `Union` 結合的兩個 query 要有相同的欄位
+* `MIN(text)` 會選出長度最短的，如果長度相同時就依照字母順序。
 ```SQL
 (
     SELECT
