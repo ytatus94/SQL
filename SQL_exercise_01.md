@@ -19,7 +19,7 @@ WHERE b.bid = r.bid AND
 ```
 
 * Find all sailor id’s of sailors who have a rating of at least 8 or reserved boat 103.
-  * 因為 `UNION` 會去除 duplicate 的，且題目是要 `OR` 所以可以把 rating >= 8 的 query 和 reserved boat 103 的 query 分開寫，然後用 `UNION` 合併
+  * 因為 `UNION` 會去除 duplicate 的，且題目是要 `OR` 所以可以把 `rating >= 8` 的 query 和 `bid = 103` 的 query 分開寫，然後用 `UNION` 合併
 
 ```SQL
 SELECT sid
