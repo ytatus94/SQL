@@ -33,7 +33,8 @@ WHERE bid = 103;
 
 * Find the names of sailors who have not reserved a boat whose name contains the string “storm”. Order the names in ascending order.
   * 有 reserved a boat 就會有 bid，所以要看 r 或 b 表格。因為 r 有 sid 可以和 s 合併，所以看 r 就好
-  * r 中存在的 sid 就是有 reserved a boat 的，只要 sid 不在 r 中就是沒有 reserved a boat 的  
+  * r 中存在的 sid 就是有 reserved a boat 的，只要 sid 不在 r 中就是沒有 reserved a boat 的
+  * 題目應該是船的名字包含 strom 才對，所以 subquery 應該是 `SELECT sid FROM r, b WHERE r.bid = b.bid AND bname LIKE '%LIKE%'`
 
 ```SQL
 SELECT sname
