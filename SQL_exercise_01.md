@@ -8,6 +8,7 @@
  Write each of the following queries in SQL.
  
 * Find the colors of boats reserved by Albert.
+  * 這裡是不需要使用 `JOIN` 的另一種寫法 
 
 ```SQL
 SELECT color
@@ -18,6 +19,7 @@ WHERE b.bid = r.bid AND
 ```
 
 * Find all sailor id’s of sailors who have a rating of at least 8 or reserved boat 103.
+  * 因為 `UNION` 會去除 duplicate 的，且題目是要 `OR` 所以可以把 rating >= 8 的 query 和 reserved boat 103 的 query 分開寫，然後用 `UNION` 合併
 
 ```SQL
 SELECT sid
@@ -29,7 +31,7 @@ FROM r
 WHERE bid = 103
 ```
 
-* Find the names of sailors who have not reserved a boat whose name contains the string “storm”. Order the names in ascending order.
+* Find the names of sailors who have not reserved a boat whose name contains the string “storm”. Order the names in ascending order. 
 
 ```SQL
 SELECT sname
@@ -44,6 +46,7 @@ ORDER BY s1.sname
 ```
 
 * Find the sailor id’s of sailors with age over 20 who have not reserved a boat whose name includes the string “thunder”.
+  * 這邊是說 boat 的名字內含有 thunder (不是說 sailor 的名字有 thunder) 
 
 ```SQL
 SELECT sid
