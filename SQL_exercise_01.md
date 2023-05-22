@@ -15,7 +15,7 @@ SELECT color
 FROM b, s, r
 WHERE b.bid = r.bid AND
       r.sid = s.sid AND
-      s.sname = 'Albert'
+      s.sname = 'Albert';
 ```
 
 * Find all sailor id’s of sailors who have a rating of at least 8 or reserved boat 103.
@@ -28,7 +28,7 @@ WHERE rating >= 8
 UNION
 SELECT sid
 FROM r
-WHERE bid = 103
+WHERE bid = 103;
 ```
 
 * Find the names of sailors who have not reserved a boat whose name contains the string “storm”. Order the names in ascending order.
@@ -43,8 +43,8 @@ WHERE sid NOT IN (
     FROM r, s
     WHERE r.sid = s.sid AND
           sname LIKE '%storm%'
-    )
-ORDER BY s1.sname
+)
+ORDER BY s1.sname;
 ```
 
 * Find the sailor id’s of sailors with age over 20 who have not reserved a boat whose name includes the string “thunder”.
@@ -58,6 +58,7 @@ WHERE age > 20 AND sid NOT IN (
     FROM r, b
     WHERE r.bid = b.bid AND
           bname LIKE '%thunder%'
+);
 ```
 
 * Find the names of sailors who have reserved at least two boats.
@@ -67,7 +68,7 @@ SELECT sname
 FROM s, r r1, r r2
 WHERE s.sid = r1.sid AND
       s.sid = r2.sid AND
-      r1.bid <> r2.bid
+      r1.bid <> r2.bid;
 ```
 
 * Find the names of sailors who have reserved all boats.
@@ -83,8 +84,8 @@ WHERE NOT EXISTS (
         FROM r
         WHERE r.sid = s.sid AND
               r.bid = b.bid
-        )
     )
+);
 ```
 
 * Find the names of sailors who have reserved all boats whose name starts with “typhoon”.
@@ -95,17 +96,17 @@ FROM s
 WHERE NOT EXISTS (
     SELECT *
     FROM b
-    WHERE bname LIKE `typhoon%’ AND
-          NOT EXISTS (
-              SELECT *
-              FROM r
-              WHERE r.sid=s.sid AND
-              r.bid=b.bid
-              )
+    WHERE bname LIKE `typhoon%’ AND NOT EXISTS (
+        SELECT *
+        FROM r
+        WHERE r.sid=s.sid AND
+        r.bid=b.bid
     )
+);
 ```
 
 * Find the sailor id’s of sailors whose rating is better than some sailor called Bob.
+  * 可能有很多 Bob，只要比其中一個 rating 高就好 
 
 solution 1:
 
@@ -113,7 +114,7 @@ solution 1:
 SELECT s1.sid
 FROM s s1, s s2
 WHERE s1.rating > s2.rating AND
-      s2.sname=`Bob’
+      s2.sname=`Bob’;
 ```
 
 solution 2:
@@ -125,10 +126,11 @@ WHERE rating > ANY (
     SELECT rating
     FROM s s2
     WHERE s2.sname=`Bob’
-    )
+);
 ```
 
 * Find the sailor id’s of sailors whose rating is better than every sailor called Bob.
+  * 可能有很多 Bob，要比全部的 Bob rating 高
 
 ```SQL
 SELECT sid
@@ -137,7 +139,7 @@ WHERE rating > ALL (
     SELECT rating
     FROM s s2
     WHERE s2.sname=`Bob’
-    )
+)
 ```
 
 * Find the sailor id’s of sailors with the highest rating.
